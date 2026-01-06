@@ -1,13 +1,8 @@
-import os
-from dotenv import load_dotenv
+from src.core.agent import LLM_TRIAGEM
 from src.core.prompts import TRIAGEM_PROMPT
-from langchain_google_genai import ChatGoogleGenerativeAI
 from pydantic import BaseModel, Field
 from typing import Literal, List, Dict
 from langchain_core.messages import SystemMessage, HumanMessage
-
-# load .env
-load_dotenv()
 
 # modelo de saída
 class TriagemOut(BaseModel):
@@ -15,14 +10,8 @@ class TriagemOut(BaseModel):
     urgencia: Literal["BAIXA","MÉDIA","ALTA"]
     campos_faltantes: List[str] = Field(default_factory=list)
 
-# iniciando a chamada
-llm_triagem = ChatGoogleGenerativeAI(
-    model = os.getenv('GOOGLE_GEMINI_MODEL'),
-    temperature = float(os.getenv('GOOGLE_GEMINI_TEMPERATURE')),
-    api_key = os.getenv('GOOGLE_API_KEY')
-)
 
-triagem_chain = llm_triagem.with_structured_output(TriagemOut)
+triagem_chain = LLM_TRIAGEM.with_structured_output(TriagemOut)
 
 def triagem(mensagem: str) -> Dict:
     try:

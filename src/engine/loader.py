@@ -1,17 +1,12 @@
-import os
-from dotenv import load_dotenv
 from pathlib import Path
 from langchain_community.document_loaders import PyMuPDFLoader
 from src.engine.splitter import SPLITTER
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
+from src.core.agent import LLM_TRIAGEM, LLM_EMBEDDINGS
 from src.core.prompts import RAG_PROMPT
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from typing import Literal, List, Dict
-
-# load .env
-load_dotenv()
 
 docs = []
 
@@ -28,26 +23,14 @@ for n in Path('data/raw/').glob('*.pdf'):
 
 chunks = SPLITTER.split_documents(docs)
 
-embeddings = GoogleGenerativeAIEmbeddings(
-    model = os.getenv('GOOGLE_GEMINI_EMBEDDINGS_MODEL'),
-    api_key = os.getenv('GOOGLE_GEMINI_EMBEDDINGS_API_KEY')
-)
-
-vectorstore = FAISS.from_documents(chunks, embeddings)
+vectorstore = FAISS.from_documents(chunks, LLM_EMBEDDINGS)
 
 retriever = vectorstore.as_retriever(
     search_type="similarity_score_threshold",
     search_kwargs={"score_threshold": 0.3, "k": 4}
 )
 
-# iniciando a chamada
-llm_triagem = ChatGoogleGenerativeAI(
-    model = os.getenv('GOOGLE_GEMINI_MODEL'),
-    temperature = float(os.getenv('GOOGLE_GEMINI_TEMPERATURE')),
-    api_key = os.getenv('GOOGLE_GEMINI_API_KEY')
-)
-
-document_chain = create_stuff_documents_chain(llm_triagem, RAG_PROMPT)
+document_chain = create_stuff_documents_chain(LLM_TRIAGEM, RAG_PROMPT)
 
 def perguntar_politica_rag(pergunta: str) -> Dict:
     docs_relacionados = retriever.invoke(pergunta)
