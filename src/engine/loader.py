@@ -5,7 +5,7 @@ from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_core.prompts import ChatPromptTemplate
+from src.core.prompts import RAG_PROMPT
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from typing import Literal, List, Dict
@@ -42,16 +42,6 @@ retriever = vectorstore.as_retriever(
     search_kwargs={"score_threshold": 0.3, "k": 4}
 )
 
-prompt_rag = ChatPromptTemplate.from_messages([
-    ("system",
-     "Você é um Assistente de Politicas Internas na empresa X.\n"
-     "Responda SOMENTE com base no conteúdo fornecido.\n"
-     "Se não houver base suficiente, responda apenas 'não sei'.\n"),
-
-     ("human", "Pergunta: {input}\n\nContexto:\n{context}")
-]
-)
-
 # iniciando a chamada
 llm_triagem = ChatGoogleGenerativeAI(
     model = os.getenv('GOOGLE_GEMINI_MODEL'),
@@ -59,7 +49,7 @@ llm_triagem = ChatGoogleGenerativeAI(
     api_key = os.getenv('GOOGLE_GEMINI_API_KEY')
 )
 
-document_chain = create_stuff_documents_chain(llm_triagem, prompt_rag)
+document_chain = create_stuff_documents_chain(llm_triagem, RAG_PROMPT)
 
 def perguntar_politica_rag(pergunta: str) -> Dict:
     docs_relacionados = retriever.invoke(pergunta)
