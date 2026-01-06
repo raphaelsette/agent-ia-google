@@ -8,11 +8,6 @@ from langchain_core.messages import SystemMessage, HumanMessage
 # load .env
 load_dotenv()
 
-# variaveis do .env
-CHAVE_GEMINI = os.getenv('GOOGLE_API_KEY')
-MODEL_GEMINI = os.getenv('GOOGLE_GEMINI_MODEL')
-TEMPERATURE_GEMINI = float(os.getenv('GOOGLE_GEMINI_TEMPERATURE'))
-
 # prompt e regras
 TRIAGEM_PROMPT = (
     "Você é um triador do service desk para políticas internas da empresa X. "
@@ -32,9 +27,9 @@ class TriagemOut(BaseModel):
 
 # iniciando a chamada
 llm_triagem = ChatGoogleGenerativeAI(
-    model = MODEL_GEMINI,
-    temperature = TEMPERATURE_GEMINI,
-    api_key = CHAVE_GEMINI
+    model = os.getenv('GOOGLE_GEMINI_MODEL'),
+    temperature = float(os.getenv('GOOGLE_GEMINI_TEMPERATURE')),
+    api_key = os.getenv('GOOGLE_API_KEY')
 )
 
 triagem_chain = llm_triagem.with_structured_output(TriagemOut)
