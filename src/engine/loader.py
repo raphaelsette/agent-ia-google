@@ -7,6 +7,7 @@ from src.core.prompts import RAG_PROMPT
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from typing import Literal, List, Dict
+from src.tools.tests import PERGUNTAS_TESTES
 
 docs = []
 
@@ -48,16 +49,8 @@ def perguntar_politica_rag(pergunta: str) -> Dict:
     
     return {"answer": txt, "citacoes": docs_relacionados, "contexto_encontrado": True}
 
-
-# perguntas para testes
-testes = ["Posso reembolsar a internet?",
-          "Quero mais 5 dias de trabalho remoto. Como faço?",
-          "Posso reembolsar curso de treinamento da Alura?",
-          "Quantas capivaras tem no Rio Pinheiros?",
-          "Abre um chamado por favor, é urgente."]
-
 # exibindo decisão
-for msg_teste in testes:
+for msg_teste in PERGUNTAS_TESTES:
     resposta = perguntar_politica_rag(msg_teste)
     print(f"PERGUNTA: {msg_teste}\n")
     print(f"RESPOSTA: {resposta["answer"]}")

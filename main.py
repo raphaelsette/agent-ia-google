@@ -3,6 +3,7 @@ from src.core.prompts import TRIAGEM_PROMPT
 from pydantic import BaseModel, Field
 from typing import Literal, List, Dict
 from langchain_core.messages import SystemMessage, HumanMessage
+from src.tools.tests import PERGUNTAS_TESTES
 
 # modelo de saída
 class TriagemOut(BaseModel):
@@ -23,13 +24,6 @@ def triagem(mensagem: str) -> Dict:
     except Exception as e:
         return {"erro": str(e)}
 
-# perguntas para testes
-testes = ["Posso reembolsar a internet?",
-          "Quero mais 5 dias de trabalho remoto. Como faço?",
-          "Posso reembolsar curso de treinamento da Alura?",
-          "Quantas capivaras tem no Rio Pinheiros?",
-          "Abre um chamado por favor, é urgente."]
-
 # exibindo decisão
-for msg_teste in testes:
+for msg_teste in PERGUNTAS_TESTES:
     print(f"Pergunta: {msg_teste}\n -> Resposta: {triagem(msg_teste)}\n")
