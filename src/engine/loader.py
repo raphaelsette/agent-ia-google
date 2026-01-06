@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from langchain_community.document_loaders import PyMuPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from src.engine.splitter import SPLITTER
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from src.core.prompts import RAG_PROMPT
@@ -26,9 +26,7 @@ for n in Path('data/raw/').glob('*.pdf'):
 
 # print(f"Total de documentos carregados: {len(docs)}")
 
-splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=30)
-
-chunks = splitter.split_documents(docs)
+chunks = SPLITTER.split_documents(docs)
 
 embeddings = GoogleGenerativeAIEmbeddings(
     model = os.getenv('GOOGLE_GEMINI_EMBEDDINGS_MODEL'),
