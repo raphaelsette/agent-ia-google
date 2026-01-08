@@ -1,3 +1,5 @@
+![Status](https://img.shields.io/badge/status-ativo-brightgreen) ![Projeto](https://img.shields.io/badge/projeto-portfólio-purple) ![Linguagem](https://img.shields.io/badge/linguagem-Python-blue)
+
 # 🤖 AI: Triagem & RAG System
 
 Este projeto implementa um fluxo inteligente de atendimento utilizando **IA Generativa** para classificar intenções e responder dúvidas baseadas em políticas internas (PDFs).
