@@ -2,7 +2,7 @@
 
 # 🤖 AI: Triagem & RAG System
 
-Este projeto implementa um fluxo inteligente de atendimento utilizando **IA Generativa** para classificar intenções e responder dúvidas baseadas em políticas internas (PDFs).
+Este projeto implementa um fluxo inteligente de atendimento utilizando **IA Generativa** para classificar intenções e responder dúvidas baseadas em políticas internas (com arquivos PDFs).
 
 ## 🚀 Funcionalidades
 
