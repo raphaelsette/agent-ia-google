@@ -1,4 +1,4 @@
-![Status](https://img.shields.io/badge/status-ativo-brightgreen) ![Projeto](https://img.shields.io/badge/projeto-portfólio-purple) ![Linguagem](https://img.shields.io/badge/linguagem-Python-blue)
+![Status](https://img.shields.io/badge/status-ativo-brightgreen) ![Linguagem](https://img.shields.io/badge/linguagem-Python-blue)
 
 # 🤖 AI: Triagem & RAG System
 
