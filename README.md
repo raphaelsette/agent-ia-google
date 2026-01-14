@@ -11,8 +11,12 @@ Este projeto implementa um fluxo inteligente de atendimento utilizando **IA Gene
     -   `PEDIR_INFO`
     -   `ABRIR_CHAMADO`
 
+<img src="./data/screenshots/print_1.png" width="800px">
+
 -   **RAG (Retrieval-Augmented Generation):** Busca semântica em documentos PDF para garantir respostas precisas e evitar alucinações.
-    
+
+<img src="./data/screenshots/print_2.png" width="800px">
+
 -   **Saída Estruturada:** Utiliza Pydantic para garantir que a triagem sempre retorne um JSON válido.
 
 ## 🛠️ Tecnologias Utilizadas
